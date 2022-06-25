@@ -59,7 +59,7 @@ class ListModeratedAdds(PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.exclude(status='public').exclude(status='delete').exclude(status='cancel')
+        return queryset.exclude(status='public').exclude(status='cancel').exclude(is_deleted=True)
 
 
 
