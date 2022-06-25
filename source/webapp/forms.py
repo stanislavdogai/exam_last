@@ -9,4 +9,4 @@ class SearchForm(forms.Form):
 class AdForm(forms.ModelForm):
     class Meta:
         model = Ad
-        exclude = ('author', 'public_at', 'created_at', 'updated_at', 'status',)
+        exclude = ('author', 'public_at', 'created_at', 'updated_at', 'status', 'is_deleted',)

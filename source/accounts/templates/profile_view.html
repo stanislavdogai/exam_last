@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card mb-3">
+        <div class="card-body text-center">
+            <h5 class="card-title">{{ profile.username }} {{ profile.profile.phone }}</h5>
+        </div>
+    </div>
+    <h2>Объявления пользователя {{ profile.username }}</h2>
+    <div class="mt-5 mb-5">
+        {% include 'partial/adds_list.html' %}
+    </div>
+{% endblock content %}

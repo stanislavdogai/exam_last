@@ -1,10 +1,10 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import redirect, get_object_or_404
-from django.urls import reverse
-from django.views import View
+from django.http import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
 
-from django.views.generic import ListView, CreateView, DetailView, UpdateView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from webapp.forms import SearchForm, AdForm
 from webapp.models import Ad
@@ -42,7 +42,7 @@ class ListAdds(ListView):
         if self.search_value:
             query = Q(title__icontains=self.search_value) | Q(text__icontains=self.search_value)
             queryset = queryset.filter(query)
-        return queryset.order_by("-public_at").filter(status='public')
+        return queryset.order_by("-public_at").filter(status='public').exclude(is_deleted=True)
 
 class AdDetailView(DetailView):
     model = Ad
@@ -88,6 +88,7 @@ class AdUpdateView(PermissionRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.status = 'moderated'
+        # form.instance.created_at = None
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -96,13 +97,21 @@ class AdUpdateView(PermissionRequiredMixin, UpdateView):
     def has_permission(self):
         return super().has_permission() or self.request.user.profile == self.get_object().author
 
-class AdDeleteView(View):
-    def get(self, request, *args, **kwargs):
-        ad = get_object_or_404(Ad, pk=kwargs['pk'])
-        print(ad)
-        ad.status = 'delete'
-        ad.save()
-        return redirect('webapp:adds_index')
 
-    # def has_permission(self):
-    #     return super().has_permission() or self.request.user.profile == self.object.author
+
+class AdDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Ad
+    success_url = reverse_lazy('webapp:adds_index')
+    template_name = 'adds/delete.html'
+    context_object_name = 'ad'
+    permission_required = 'webapp.delete_ad'
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.soft_delete()
+        messages.success(self.request, f'Заказ № {self.object.pk} успешно удален!')
+        return HttpResponseRedirect(self.get_success_url())
+
+    def has_permission(self):
+        return super().has_permission() or self.request.user.profile == self.get_object().author
+

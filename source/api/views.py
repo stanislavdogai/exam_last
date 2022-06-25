@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.utils import timezone
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from webapp.models import Ad
@@ -6,6 +7,7 @@ from webapp.models import Ad
 class PublicAd(APIView):
     def get(self, request, *args, **kwargs):
         ad = Ad.objects.get(pk=kwargs['pk'])
+        ad.public_at = timezone.now()
         ad.status = 'public'
         ad.save()
         return Response(data={'message' : 'Успешно опубликовано'})

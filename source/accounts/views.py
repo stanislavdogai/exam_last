@@ -33,12 +33,18 @@ class ProfileDetailView(PermissionRequiredMixin, DetailView):
     def get_object(self, queryset=None):
         return self.request.user
 
+    def has_permission(self):
+        return super().has_permission() or self.request.user == self.get_object()
+
 class ProfileUpdateView(PermissionRequiredMixin, UpdateView):
     model = Profile
     template_name = 'profile_change.html'
     form_class = ProfileForm
     context_object_name = 'user_obj'
-    permission_required = 'webapp.view_profile'
+    permission_required = 'webapp.change_profile'
 
     def get_object(self, queryset=None):
         return self.request.user
+
+    def has_permission(self):
+        return super().has_permission() or self.request.user == self.get_object()

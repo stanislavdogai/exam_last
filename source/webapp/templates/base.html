@@ -36,7 +36,7 @@
                             <a class="nav-link" href="{% url 'accounts:login' %}">Войти</a>
                         </li>
                     {% endif %}
-                    {% if perms.webapp.change_ad %}
+                    {% if perms.webapp.view_ad %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'webapp:adds_index_moderated' %}">Ожидают модерацию</a>
                         </li>

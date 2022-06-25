@@ -8,15 +8,15 @@
             <div class="col">
                  <div class="card h-100">
                     <img src="{{ ad.image.url }}" class="card-img-top rounded-0" alt="...">
-                    <div class="card-body p-0">
-                        <div class="tittle-card border-top border-bottom border-dark border-4">
+                    <div class="card-body px-2 pt-0">
+                        <div class="tittle-card border-top text-center border-bottom border-dark border-4">
                             <h5 class="card-title my-3 bot-name">{{ ad.title }}</h5>
                         </div>
                         <p class="card-text text-style">{{ ad.text }}</p>
                         <p class="card-text text-style">Статус: {{ ad.get_status_display }}</p>
                         <p class="card-text text-style">Дата создания: {{ ad.created_at }}</p>
                         <p class="card-text text-style">Дата публикации: {{ ad.public_at }}</p>
-                        <p>test111 {{ user.profile }}</p>
+                        <p>Создатель: {{ ad.author }}</p>
                     </div>
                     <div class="btn-group w-100" role="group" aria-label="Basic example">
                         <a href="{% url 'webapp:adds_detail' ad.id %}" class="btn btn-danger rounded-0 py-2 bot-buttons-style">Просмотр</a>

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <div class="container text-center">
+        <form method="post">
+            <h3 class="mt-4 mb-4">Вы хотите удалить объявление № {{ ad.pk }}?</h3>
+            {% csrf_token %}
+            <a href="{% url 'webapp:adds_index' %}" class="btn btn-dark">Нет</a>
+            <input type="submit" name="action" value="Да" class="btn btn-danger"/>
+        </form>
+    </div>
+{% endblock %}

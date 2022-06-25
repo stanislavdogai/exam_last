@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext as _
 
-STATUS = [('moderated', 'На модерации'), ('public', 'Опубликовано'), ('cancel', 'Отклонено'), ('delete', 'Удалён')]
+STATUS = [('moderated', 'На модерации'), ('public', 'Опубликовано'), ('cancel', 'Отклонено')]
 
 class Category(models.Model):
     category = models.CharField(max_length=50, null=False, blank=False, verbose_name=_('Категория'))
@@ -27,6 +27,11 @@ class Ad(models.Model):
     public_at = models.DateTimeField(null=True, blank=True, verbose_name=_('Дата публикации'))
     author = models.ForeignKey('accounts.Profile', related_name='adds', null=False, blank=False,
                                on_delete=models.PROTECT, verbose_name=_('Автор'))
+    is_deleted = models.BooleanField(null=True, blank=True, default=False, verbose_name=_('Удален'))
+
+    def soft_delete(self):
+        self.is_deleted = True
+        self.save()
 
     class Meta:
         verbose_name = 'Объявление'
