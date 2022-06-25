@@ -5,8 +5,8 @@ from django.urls import reverse, reverse_lazy
 
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
-from webapp.forms import SearchForm, AdForm, CommentForm
-from webapp.models import Ad, Comment
+from webapp.forms import SearchForm, AdForm
+from webapp.models import Ad
 
 
 class ListAdds(ListView):
@@ -89,11 +89,6 @@ class AdUpdateView(PermissionRequiredMixin, UpdateView):
         form.instance.status = 'moderated'
         form.instance.public_at = None
         return super().form_valid(form)
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.filter(Q(status='public') & Q(is_deleted=False))
-        return queryset
 
     def get_success_url(self):
         return reverse('webapp:adds_index')

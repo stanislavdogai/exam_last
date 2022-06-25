@@ -9,3 +9,4 @@ uploads
 .DS_Store
 settings_local.py
 /source/.env
+/source/uploads.zip
