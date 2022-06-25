@@ -24,7 +24,7 @@
                     </div>
                     <div class="btn-group w-100" role="group" aria-label="Basic example">
                         <a href="{% url 'webapp:adds_detail' ad.id %}" class="btn btn-danger rounded-0 py-2 bot-buttons-style">Просмотр</a>
-                        <a class="btn btn-primary rounded-0 py-2 bot-buttons-style">Редактировать</a>
+                        <a href="{% url 'webapp:adds_update' ad.id %}" class="btn btn-primary rounded-0 py-2 bot-buttons-style">Редактировать</a>
                     </div>
                 </div>
             </div>

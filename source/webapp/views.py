@@ -1,7 +1,8 @@
 from django.db.models import Q
 from django.shortcuts import render
+from django.urls import reverse
 
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView
 
 from webapp.forms import SearchForm, AdForm
 from webapp.models import Ad
@@ -41,6 +42,10 @@ class ListAdds(ListView):
             queryset = queryset.filter(query)
         return queryset.order_by("-public_at").filter(status='public')
 
+class AdDetailView(DetailView):
+    model = Ad
+    template_name = 'adds/detail.html'
+
 class ListModeratedAdds(ListView):
     model = Ad
     context_object_name = "adds"
@@ -53,6 +58,9 @@ class ListModeratedAdds(ListView):
         queryset = super().get_queryset()
         return queryset.order_by("-public_at").exclude(status='public')
 
+class DetailModeratedAdDetailView(DetailView):
+    model = Ad
+    template_name = 'adds/detail_moderated.html'
 
 class AdCreateView(CreateView):
     model = Ad
@@ -63,6 +71,17 @@ class AdCreateView(CreateView):
         form.instance.author = self.request.user.profile
         return super().form_valid(form)
 
-class AdDetailView(DetailView):
+    def get_success_url(self):
+        return reverse('webapp:adds_index')
+
+class AdUpdateView(UpdateView):
     model = Ad
-    template_name = 'adds/detail.html'
+    form_class = AdForm
+    template_name = 'adds/update.html'
+
+    def form_valid(self, form):
+        form.instance.status = 'moderated'
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('webapp:adds_index')
