@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os.path, sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     #lib
     'rest_framework',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -129,6 +130,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-LOGIN_REDIRECT_URL = 'webapp:index'
-LOGOUT_REDIRECT_URL = 'webapp:index'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+# MEDIA_ROOT = BASE_DIR.join.path('uploads')
+MEDIA_URL = '/uploads/'
+LOGIN_REDIRECT_URL = 'webapp:adds_index'
+LOGOUT_REDIRECT_URL = 'webapp:adds_index'
