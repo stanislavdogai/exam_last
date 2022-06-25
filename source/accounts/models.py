@@ -15,4 +15,4 @@ class Profile(models.Model):
         db_table = 'profile_user'
 
     def __str__(self):
-        return f'Профиль: {self.user.username}, {self.id}'
+        return f'{self.user.username}'

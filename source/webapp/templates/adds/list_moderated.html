@@ -8,7 +8,6 @@
     {% if adds %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 mt-5">
         {% for ad in adds %}
-            {{ ad.id }}
             <div class="col">
                  <div class="card h-100">
                     <img src="{{ ad.image.url }}" class="card-img-top rounded-0" alt="...">
@@ -20,7 +19,7 @@
                         <p class="card-text text-style">Статус: {{ ad.get_status_display }}</p>
                         <p class="card-text text-style">Дата создания: {{ ad.created_at }}</p>
                         <p class="card-text text-style">Дата публикации: {{ ad.public_at }}</p>
-                        <p class="card-text text-style">Создатель: {{ ad.author }}</p>
+                        <p>Создатель: <a href="{% url 'accounts:user' ad.author.id %}">{{ ad.author }}</a></p>
                     </div>
                     <div class="btn-group w-100" role="group" aria-label="Basic example">
                         <a href="{% url 'webapp:adds_detail_moderated' ad.id %}" class="btn btn-danger rounded-0 py-2 bot-buttons-style">Просмотр</a>
