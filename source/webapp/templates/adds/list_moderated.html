@@ -6,7 +6,7 @@
     {% endif %}
 
     {% if adds %}
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 mt-5">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 mt-5 g-3">
         {% for ad in adds %}
             <div class="col">
                  <div class="card h-100">
@@ -22,7 +22,7 @@
                         <p>Создатель: <a href="{% url 'accounts:user' ad.author.id %}">{{ ad.author }}</a></p>
                     </div>
                     <div class="btn-group w-100" role="group" aria-label="Basic example">
-                        <a href="{% url 'webapp:adds_detail_moderated' ad.id %}" class="btn btn-danger rounded-0 py-2 bot-buttons-style">Просмотр</a>
+                        <a href="{% url 'webapp:adds_detail_moderated' ad.id %}" class="btn btn-primary rounded-0 py-2 bot-buttons-style"><i class="bi bi-eye-fill"></i></a>
                     </div>
                 </div>
             </div>

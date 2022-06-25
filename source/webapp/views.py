@@ -14,7 +14,7 @@ class ListAdds(ListView):
     model = Ad
     context_object_name = "adds"
     template_name = "adds/list.html"
-    paginate_by = 10
+    paginate_by = 4
     paginate_orphans = 0
     ordering = '-public_at'
 

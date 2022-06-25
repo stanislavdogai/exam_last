@@ -3,7 +3,7 @@
     {% endif %}
 
     {% if adds %}
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
         {% for ad in adds %}
             <div class="col">
                  <div class="card h-100">
@@ -19,12 +19,12 @@
                         <p>Создатель: <a href="{% url 'accounts:user' ad.author.id %}">{{ ad.author }}</a></p>
                     </div>
                     <div class="btn-group w-100" role="group" aria-label="Basic example">
-                        <a href="{% url 'webapp:adds_detail' ad.id %}" class="btn btn-danger rounded-0 py-2 bot-buttons-style">Просмотр</a>
+                        <a href="{% url 'webapp:adds_detail' ad.id %}" class="btn btn-primary rounded-0 py-2 bot-buttons-style"><i class="bi bi-eye-fill"></i></a>
                         {% if perms.webapp.change_ad or user.profile == ad.author %}
-                            <a href="{% url 'webapp:adds_update' ad.id %}" class="btn btn-primary rounded-0 py-2 bot-buttons-style">Редактировать</a>
+                            <a href="{% url 'webapp:adds_update' ad.id %}" class="btn btn-warning rounded-0 py-2 bot-buttons-style"><i class="bi bi-pencil-fill"></i></a>
                         {% endif %}
                         {% if perms.webapp.delete_ad or user.profile == ad.author %}
-                            <a href="{% url 'webapp:adds_delete' ad.id %}" class="btn btn-primary rounded-0 py-2 bot-buttons-style">Удалить</a>
+                            <a href="{% url 'webapp:adds_delete' ad.id %}" class="btn btn-danger rounded-0 py-2 bot-buttons-style"><i class="bi bi-trash-fill"></i></a>
                         {% endif %}
                     </div>
                 </div>
