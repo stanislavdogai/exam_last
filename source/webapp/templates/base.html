@@ -26,9 +26,6 @@
                             <a class="nav-link" href="{% url 'webapp:adds_create' %}">Добавить объявление</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'webapp:adds_index_moderated' %}">Ожидают модерацию</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'accounts:logout' %}">Выйти</a>
                         </li>
                         <li class="nav-item">
@@ -38,8 +35,10 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'accounts:login' %}">Войти</a>
                         </li>
+                    {% endif %}
+                    {% if perms.webapp.change_ad %}
                         <li class="nav-item">
-                            <a class="nav-link">Зарегистрироваться</a>
+                            <a class="nav-link" href="{% url 'webapp:adds_index_moderated' %}">Ожидают модерацию</a>
                         </li>
                     {% endif %}
                     </ul>

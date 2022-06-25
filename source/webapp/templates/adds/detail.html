@@ -13,6 +13,15 @@
                 <p class="card-text"><small class="text-muted">Цена: {{ ad.price }} сом</small></p>
                 <p class="card-text">Дата публикации: {{ ad.public_at }}</p>
                 <p class="card-text">Создал: {{ ad.author }}</p>
+                <p class="card-text">Статус: {{ ad.get_status_display }}</p>
+            </div>
+            <div class="btn-group w-100" role="group" aria-label="Basic example">
+                {% if perms.webapp.change_ad or user.profile == ad.author %}
+                    <a href="{% url 'webapp:adds_update' ad.id %}" class="btn btn-primary rounded-0 py-2 bot-buttons-style">Редактировать</a>
+                {% endif %}
+                {% if perms.webapp.delete_ad or user.profile == ad.author %}
+                    <a href="{% url 'webapp:adds_delete' ad.id %}" class="btn btn-primary rounded-0 py-2 bot-buttons-style">Удалить</a>
+                {% endif %}
             </div>
         </div>
     </div>

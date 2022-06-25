@@ -1,5 +1,6 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
 
@@ -47,23 +48,27 @@ class AdDetailView(DetailView):
     model = Ad
     template_name = 'adds/detail.html'
 
-class ListModeratedAdds(ListView):
+class ListModeratedAdds(PermissionRequiredMixin, ListView):
     model = Ad
     context_object_name = "adds"
     template_name = "adds/list_moderated.html"
     paginate_by = 10
     paginate_orphans = 0
     ordering = '-created_at'
+    permission_required = 'webapp.view_ad'
 
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.order_by("-public_at").exclude(status='public').exclude(status='delete')
 
-class DetailModeratedAdDetailView(DetailView):
+
+
+class DetailModeratedAdDetailView(PermissionRequiredMixin, DetailView):
     model = Ad
     template_name = 'adds/detail_moderated.html'
+    permission_required = 'webapp.view_ad'
 
-class AdCreateView(CreateView):
+class AdCreateView(LoginRequiredMixin, CreateView):
     model = Ad
     form_class = AdForm
     template_name = 'adds/create.html'
@@ -75,10 +80,11 @@ class AdCreateView(CreateView):
     def get_success_url(self):
         return reverse('webapp:adds_index')
 
-class AdUpdateView(UpdateView):
+class AdUpdateView(PermissionRequiredMixin, UpdateView):
     model = Ad
     form_class = AdForm
     template_name = 'adds/update.html'
+    permission_required = 'webapp.change_ad'
 
     def form_valid(self, form):
         form.instance.status = 'moderated'
@@ -87,6 +93,8 @@ class AdUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('webapp:adds_index')
 
+    def has_permission(self):
+        return super().has_permission() or self.request.user.profile == self.get_object().author
 
 class AdDeleteView(View):
     def get(self, request, *args, **kwargs):
@@ -95,3 +103,6 @@ class AdDeleteView(View):
         ad.status = 'delete'
         ad.save()
         return redirect('webapp:adds_index')
+
+    # def has_permission(self):
+    #     return super().has_permission() or self.request.user.profile == self.object.author
