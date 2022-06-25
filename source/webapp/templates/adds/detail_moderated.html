@@ -15,8 +15,12 @@
                 <p class="card-text">Создал: {{ ad.author }}</p>
             </div>
             <div class="btn-group w-100" role="group" aria-label="Basic example">
-                <a href="{% url 'webapp:adds_detail_moderated' ad.id %}" class="btn btn-danger rounded-0 py-2 bot-buttons-style">Просмотр</a>
-                <a class="btn btn-primary rounded-0 py-2 bot-buttons-style">Редактировать</a>
+                <button data-public-id="{% url 'api:public' ad.id %}" onclick="public(event)" class="btn btn-danger rounded-0 py-2 bot-buttons-style">Одобрить</button>
+                <button data-cancel-id="{% url 'api:cancel' ad.id %}" onclick="cancel(event)" class="btn btn-primary rounded-0 py-2 bot-buttons-style">Отказать</button>
+            </div>
+
+            <div class="card-footer">
+                <p id="moderated-text"></p>
             </div>
         </div>
     </div>

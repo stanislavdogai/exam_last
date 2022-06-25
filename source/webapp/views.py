@@ -85,3 +85,5 @@ class AdUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('webapp:adds_index')
+
+
