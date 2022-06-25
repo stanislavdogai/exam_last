@@ -1,12 +1,9 @@
-{% extends 'base.html' %}
-
-{% block content %}
 {% if is_paginated %}
         {% include 'partial/pagination.html' %}
     {% endif %}
 
     {% if adds %}
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 mt-5">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         {% for ad in adds %}
             <div class="col">
                  <div class="card h-100">
@@ -21,13 +18,14 @@
                         <p class="card-text text-style">Дата публикации: {{ ad.public_at }}</p>
                     </div>
                     <div class="btn-group w-100" role="group" aria-label="Basic example">
-                        <a href="{% url 'webapp:adds_detail_moderated' ad.id %}" class="btn btn-danger rounded-0 py-2 bot-buttons-style">Просмотр</a>
+                        <a href="{% url 'webapp:adds_detail' ad.id %}" class="btn btn-danger rounded-0 py-2 bot-buttons-style">Просмотр</a>
+                        <a href="{% url 'webapp:adds_update' ad.id %}" class="btn btn-primary rounded-0 py-2 bot-buttons-style">Редактировать</a>
+                        <a href="{% url 'webapp:adds_delete' ad.id %}" class="btn btn-primary rounded-0 py-2 bot-buttons-style">Удалить</a>
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
     {% else %}
-        <h2>Объявлений на проверку нет!</h2>
+        <h2>Объявлений нет!</h2>
     {% endif %}
-{% endblock content %}

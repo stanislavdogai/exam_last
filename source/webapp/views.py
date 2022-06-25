@@ -1,6 +1,7 @@
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.views import View
 
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 
@@ -56,7 +57,7 @@ class ListModeratedAdds(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.order_by("-public_at").exclude(status='public')
+        return queryset.order_by("-public_at").exclude(status='public').exclude(status='delete')
 
 class DetailModeratedAdDetailView(DetailView):
     model = Ad
@@ -87,3 +88,10 @@ class AdUpdateView(UpdateView):
         return reverse('webapp:adds_index')
 
 
+class AdDeleteView(View):
+    def get(self, request, *args, **kwargs):
+        ad = get_object_or_404(Ad, pk=kwargs['pk'])
+        print(ad)
+        ad.status = 'delete'
+        ad.save()
+        return redirect('webapp:adds_index')

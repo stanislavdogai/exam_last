@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext as _
 
-STATUS = [('moderated', 'На модерации'), ('public', 'Опубликовано'), ('cancel', 'Отклонено')]
+STATUS = [('moderated', 'На модерации'), ('public', 'Опубликовано'), ('cancel', 'Отклонено'), ('delete', 'Удалён')]
 
 class Category(models.Model):
     category = models.CharField(max_length=50, null=False, blank=False, verbose_name=_('Категория'))
