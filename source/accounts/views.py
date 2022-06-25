@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.paginator import Paginator
+from django.shortcuts import redirect
 from django.views.generic import DetailView, UpdateView
 
 from accounts.forms import ProfileForm
@@ -44,6 +45,9 @@ class ProfileUpdateView(PermissionRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+    def get_success_url(self):
+        return redirect('accounts:profile', pk=self.kwargs['pk'])
 
     def has_permission(self):
         return super().has_permission() or self.request.user == self.get_object()

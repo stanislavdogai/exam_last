@@ -1,0 +1,149 @@
+[
+{
+  "model": "webapp.category",
+  "pk": 1,
+  "fields": {
+    "category": "Авто"
+  }
+},
+{
+  "model": "webapp.category",
+  "pk": 2,
+  "fields": {
+    "category": "Техника"
+  }
+},
+{
+  "model": "webapp.category",
+  "pk": 3,
+  "fields": {
+    "category": "Продукты"
+  }
+},
+{
+  "model": "webapp.category",
+  "pk": 4,
+  "fields": {
+    "category": "Игрушки"
+  }
+},
+{
+  "model": "webapp.ad",
+  "pk": 1,
+  "fields": {
+    "title": "Машина",
+    "text": "БЫМВЫ",
+    "category": 1,
+    "image": "images/E0F1D0F5-3DD5-4165-8612-4B93A3CA3419.JPG",
+    "price": 9000,
+    "status": "moderated",
+    "created_at": "2022-06-25T10:47:16.305Z",
+    "updated_at": "2022-06-25T10:47:16.305Z",
+    "public_at": null,
+    "author": 2,
+    "is_deleted": false
+  }
+},
+{
+  "model": "webapp.ad",
+  "pk": 2,
+  "fields": {
+    "title": "Пирожок",
+    "text": "Вкусный",
+    "category": 3,
+    "image": "images/пирожок-50261022.jpeg",
+    "price": 50,
+    "status": "moderated",
+    "created_at": "2022-06-25T10:48:02.114Z",
+    "updated_at": "2022-06-25T10:48:02.114Z",
+    "public_at": null,
+    "author": 2,
+    "is_deleted": false
+  }
+},
+{
+  "model": "webapp.ad",
+  "pk": 3,
+  "fields": {
+    "title": "Айфон",
+    "text": "первый",
+    "category": 2,
+    "image": "images/IPhone_First_Generation.jpeg",
+    "price": 10000,
+    "status": "moderated",
+    "created_at": "2022-06-25T10:48:37.141Z",
+    "updated_at": "2022-06-25T10:48:37.141Z",
+    "public_at": null,
+    "author": 2,
+    "is_deleted": false
+  }
+},
+{
+  "model": "webapp.ad",
+  "pk": 4,
+  "fields": {
+    "title": "Миша косой",
+    "text": "Бежевый",
+    "category": 4,
+    "image": "images/slide-1.jpg",
+    "price": null,
+    "status": "cancel",
+    "created_at": "2022-06-25T10:49:34.817Z",
+    "updated_at": "2022-06-25T11:11:14.451Z",
+    "public_at": null,
+    "author": 2,
+    "is_deleted": false
+  }
+},
+{
+  "model": "webapp.ad",
+  "pk": 5,
+  "fields": {
+    "title": "Просто заголовок",
+    "text": "Описание",
+    "category": 4,
+    "image": "images/photo-3.jpg",
+    "price": 123,
+    "status": "moderated",
+    "created_at": "2022-06-25T10:49:55.437Z",
+    "updated_at": "2022-06-25T10:49:55.437Z",
+    "public_at": null,
+    "author": 2,
+    "is_deleted": false
+  }
+},
+{
+  "model": "webapp.ad",
+  "pk": 6,
+  "fields": {
+    "title": "Здравствуйте Дмитрий",
+    "text": "Спасибо за курсы!)))",
+    "category": 2,
+    "image": "images/logo.png",
+    "price": 222,
+    "status": "moderated",
+    "created_at": "2022-06-25T10:51:47.121Z",
+    "updated_at": "2022-06-25T10:51:47.121Z",
+    "public_at": null,
+    "author": 3,
+    "is_deleted": false
+  }
+},
+{
+  "model": "webapp.ad",
+  "pk": 7,
+  "fields": {
+    "title": "Устал придумывать",
+    "text": "Что нибудь буду писать",
+    "category": 1,
+    "image": "images/photo-3_FXXdNS2.jpg",
+    "price": 123132123,
+    "status": "public",
+    "created_at": "2022-06-25T10:52:10.680Z",
+    "updated_at": "2022-06-25T10:55:42.303Z",
+    "public_at": "2022-06-25T10:55:42.303Z",
+    "author": 3,
+    "is_deleted": false
+  }
+}
+]

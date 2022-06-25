@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponseRedirect
@@ -6,8 +5,8 @@ from django.urls import reverse, reverse_lazy
 
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
-from webapp.forms import SearchForm, AdForm
-from webapp.models import Ad
+from webapp.forms import SearchForm, AdForm, CommentForm
+from webapp.models import Ad, Comment
 
 
 class ListAdds(ListView):
@@ -48,6 +47,7 @@ class AdDetailView(DetailView):
     model = Ad
     template_name = 'adds/detail.html'
 
+
 class ListModeratedAdds(PermissionRequiredMixin, ListView):
     model = Ad
     context_object_name = "adds"
@@ -59,7 +59,7 @@ class ListModeratedAdds(PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.exclude(status='public').exclude(status='delete')
+        return queryset.exclude(status='public').exclude(status='delete').exclude(status='cancel')
 
 
 
@@ -84,18 +84,22 @@ class AdUpdateView(PermissionRequiredMixin, UpdateView):
     model = Ad
     form_class = AdForm
     template_name = 'adds/update.html'
-    permission_required = 'webapp.change_ad'
 
     def form_valid(self, form):
         form.instance.status = 'moderated'
-        # form.instance.created_at = None
+        form.instance.public_at = None
         return super().form_valid(form)
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(Q(status='public') & Q(is_deleted=False))
+        return queryset
 
     def get_success_url(self):
         return reverse('webapp:adds_index')
 
     def has_permission(self):
-        return super().has_permission() or self.request.user.profile == self.get_object().author
+        return self.request.user.profile == self.get_object().author
 
 
 
@@ -109,7 +113,6 @@ class AdDeleteView(PermissionRequiredMixin, DeleteView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.soft_delete()
-        messages.success(self.request, f'Заказ № {self.object.pk} успешно удален!')
         return HttpResponseRedirect(self.get_success_url())
 
     def has_permission(self):

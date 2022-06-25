@@ -23,6 +23,12 @@
                     <a href="{% url 'webapp:adds_delete' ad.id %}" class="btn btn-danger rounded-0 py-2 bot-buttons-style"><i class="bi bi-trash-fill"></i></a>
                 {% endif %}
             </div>
+            <div class="text-center">
+                <form method="post">
+                    {% csrf_token %}
+                    {% include 'partial/form.html' with button_text='Добавить' %}
+                </form>
+            </div>
         </div>
     </div>
 </div>

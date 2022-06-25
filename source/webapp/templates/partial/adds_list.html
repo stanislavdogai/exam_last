@@ -13,9 +13,8 @@
                             <h5 class="card-title my-3 bot-name">{{ ad.title }}</h5>
                         </div>
                         <p class="card-text text-style">Описание: <b>{{ ad.text }}</b></p>
-                        <p class="card-text text-style">Статус: <b>{{ ad.get_status_display }}</b></p>
+                        <p class="card-text text-style">Цена: <b>{{ ad.price }} сом</b></p>
                         <p class="card-text text-style">Дата создания: <b>{{ ad.created_at }}</b></p>
-                        <p class="card-text text-style">Дата публикации: <b>{{ ad.public_at }}</b></p>
                         <p>Создатель: <a href="{% url 'accounts:user' ad.author.id %}">{{ ad.author }}</a></p>
                     </div>
                     <div class="btn-group w-100" role="group" aria-label="Basic example">

@@ -37,3 +37,19 @@ class Ad(models.Model):
         verbose_name = 'Объявление'
         verbose_name_plural = 'Объявления'
         db_table = 'adds'
+
+class Comment(models.Model):
+    ad = models.ForeignKey('webapp.Ad', on_delete=models.CASCADE, related_name='comments',
+                           null=False, blank=False, verbose_name=_('Объявление'))
+    author = models.ForeignKey('accounts.Profile', on_delete=models.CASCADE, related_name='comments_author',
+                               null=False, blank=False, verbose_name=_('Автор'))
+    text = models.CharField(max_length=300, null=False, blank=False, verbose_name=_('Комментарий'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата публикации'))
+
+    def __str__(self):
+        return f"{self.author}: {self.text}"
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+        db_table = 'comments'
