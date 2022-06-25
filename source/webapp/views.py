@@ -1,10 +1,8 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.db.models import Q
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.urls import reverse, reverse_lazy
-from django.http import HttpResponseBadRequest
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from rest_framework.response import Response
 
 from webapp.forms import SearchForm, AdForm
 from webapp.models import Ad
@@ -53,8 +51,7 @@ class AdDetailView(DetailView):
         if obj.status == 'public':
             return super().get_context_data(**kwargs)
         else:
-            return HttpResponseBadRequest()
-        #хотел как лучше, но хотя бы не даёт просмотреть немодерированные объявления
+            return HttpResponseNotFound("Нельзя просматривать")
 
 class ListModeratedAdds(PermissionRequiredMixin, ListView):
     model = Ad
